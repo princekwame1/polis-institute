@@ -1,8 +1,11 @@
-@props(['title' => null, 'description' => null])
+@props(['title' => null, 'description' => null, 'image' => null, 'imageAlt' => null, 'type' => 'website', 'head' => null])
 
 @php
     $site = config('prolis');
     $pageTitle = $title ? "{$title} | {$site['name']}" : "{$site['name']} | {$site['full_name']}";
+    $metaDescription = $description ?: 'PROLIS Institute provides professional short courses in communication, public relations, digital marketing, branding, events, leadership and project management in Accra and Sunyani, Ghana.';
+    $canonicalUrl = request()->integer('page') > 1 ? url()->current().'?page='.request()->integer('page') : url()->current();
+    $shareImage = $image ?: asset('images/badge.png');
 @endphp
 
 <!DOCTYPE html>
@@ -11,13 +14,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $pageTitle }}</title>
-    <meta name="description" content="{{ $description ?? 'PROLIS Institute provides professional short courses in communication, public relations, digital marketing, branding, events, leadership and project management in Accra and Sunyani, Ghana.' }}">
+    <meta name="description" content="{{ $metaDescription }}">
     <meta name="theme-color" content="#7b2181">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
 
-    <meta property="og:title" content="{{ $pageTitle }}">
-    <meta property="og:description" content="{{ $site['tagline'] }}">
-    <meta property="og:image" content="{{ asset('images/badge.png') }}">
-    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ $site['name'] }}">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:type" content="{{ $type }}">
+    <meta property="og:title" content="{{ $title ?? $pageTitle }}">
+    <meta property="og:description" content="{{ $metaDescription }}">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    <meta property="og:image" content="{{ $shareImage }}">
+    <meta property="og:image:alt" content="{{ $imageAlt ?? $title ?? $site['name'] }}">
+
+    <meta name="twitter:card" content="{{ $image ? 'summary_large_image' : 'summary' }}">
+    <meta name="twitter:title" content="{{ $title ?? $pageTitle }}">
+    <meta name="twitter:description" content="{{ $metaDescription }}">
+    <meta name="twitter:image" content="{{ $shareImage }}">
+    <meta name="twitter:image:alt" content="{{ $imageAlt ?? $title ?? $site['name'] }}">
+
+    {{ $head }}
 
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">

@@ -139,6 +139,44 @@ class AdminTest extends TestCase
         $this->assertFalse($area->show_on_home);
     }
 
+    public function test_course_area_courses_are_read_from_editor_html(): void
+    {
+        $this->actingAs($this->admin())->post('/admin/course-areas', [
+            'title' => 'Data Skills',
+            'icon' => 'clipboard',
+            'items' => '<p>Excel for Professionals</p><p><br></p><p>Power BI &amp; Tableau</p>',
+            'sort_order' => 1,
+        ])->assertRedirect('/admin/course-areas');
+
+        $this->assertSame(['Excel for Professionals', 'Power BI & Tableau'], CourseArea::sole()->items);
+    }
+
+    public function test_post_body_html_is_sanitized_when_saved(): void
+    {
+        $this->actingAs($this->admin())->post('/admin/posts', [
+            'title' => 'Open Day',
+            'category' => 'Events and Activities',
+            'body' => '<p onclick="alert(1)">Join <strong>us</strong>.</p><script>alert(1)</script><p><a href="javascript:alert(1)">Bad</a> <a href="https://prolis.edu.gh">Good</a></p>',
+            'status' => 'published',
+        ])->assertRedirect('/admin/posts');
+
+        $body = Post::sole()->body;
+        $this->assertStringContainsString('<p>Join <strong>us</strong>.</p>', $body);
+        $this->assertStringContainsString('<a href="https://prolis.edu.gh" rel="noopener noreferrer">Good</a>', $body);
+        $this->assertStringNotContainsString('script', $body);
+        $this->assertStringNotContainsString('onclick', $body);
+        $this->assertStringNotContainsString('javascript:', $body);
+    }
+
+    public function test_empty_editor_fails_required_validation(): void
+    {
+        $this->actingAs($this->admin())->post('/admin/faqs', [
+            'question' => 'Is there parking?',
+            'answer' => '<p><br></p>',
+            'sort_order' => 1,
+        ])->assertSessionHasErrors('answer');
+    }
+
     public function test_faq_can_be_updated_and_deleted(): void
     {
         $faq = Faq::factory()->create();

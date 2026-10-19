@@ -24,7 +24,7 @@
                             @endunless
                         </div>
                         <p class="mt-1 font-display text-lg font-extrabold">{{ $slide->title }}</p>
-                        <p class="line-clamp-1 text-sm text-muted">{{ $slide->text }}</p>
+                        <p class="line-clamp-1 text-sm text-muted">{{ \App\Support\RichText::plain($slide->text) }}</p>
                     </div>
                     <div class="flex items-center gap-1">
                         <x-admin.edit-link :href="route('admin.slides.edit', $slide)" />

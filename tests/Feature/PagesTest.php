@@ -83,6 +83,74 @@ class PagesTest extends TestCase
         $this->get('/news-and-publications/'.$post->slug)->assertOk()->assertSee($post->excerpt);
     }
 
+    public function test_post_body_is_rendered_as_html(): void
+    {
+        $post = Post::factory()->create(['body' => '<p>Join <strong>us</strong>.</p><ul><li>Accra</li></ul>']);
+
+        $this->get('/news-and-publications/'.$post->slug)
+            ->assertSee('<p>Join <strong>us</strong>.</p><ul><li>Accra</li></ul>', false);
+    }
+
+    public function test_plain_text_post_body_is_split_into_paragraphs(): void
+    {
+        $post = Post::factory()->create(['body' => "First line\nsame paragraph.\n\nSecond <paragraph>."]);
+
+        $this->get('/news-and-publications/'.$post->slug)
+            ->assertSee('<p>First line<br />same paragraph.</p><p>Second &lt;paragraph&gt;.</p>', false);
+    }
+
+    public function test_post_page_has_share_image_and_article_meta(): void
+    {
+        $post = Post::factory()->create([
+            'title' => 'Open Day at Sunyani',
+            'excerpt' => '<p>Meet our <strong>facilitators</strong>.</p>',
+            'image' => 'posts/open-day.jpg',
+        ]);
+        $url = route('news.show', $post);
+
+        $this->get('/news-and-publications/'.$post->slug)
+            ->assertOk()
+            ->assertSee('<link rel="canonical" href="'.$url.'">', false)
+            ->assertSee('<meta property="og:type" content="article">', false)
+            ->assertSee('<meta property="og:title" content="Open Day at Sunyani">', false)
+            ->assertSee('<meta property="og:description" content="Meet our facilitators.">', false)
+            ->assertSee('<meta property="og:image" content="'.asset('storage/posts/open-day.jpg').'">', false)
+            ->assertSee('<meta name="twitter:card" content="summary_large_image">', false)
+            ->assertSee('"@type":"BlogPosting"', false)
+            ->assertSee('https://www.facebook.com/sharer/sharer.php?u='.urlencode($url), false)
+            ->assertSee('data-copy-link="'.$url.'"', false);
+    }
+
+    public function test_post_without_image_falls_back_to_the_badge(): void
+    {
+        $post = Post::factory()->create(['image' => null]);
+
+        $this->get('/news-and-publications/'.$post->slug)
+            ->assertSee('<meta property="og:image" content="'.asset('images/badge.png').'">', false)
+            ->assertSee('<meta name="twitter:card" content="summary">', false);
+    }
+
+    public function test_sitemap_lists_pages_and_published_posts(): void
+    {
+        $published = Post::factory()->create();
+        $draft = Post::factory()->create(['published_at' => null]);
+
+        $this->get('/sitemap.xml')
+            ->assertOk()
+            ->assertHeader('Content-Type', 'application/xml')
+            ->assertSee('<loc>'.route('about').'</loc>', false)
+            ->assertSee('<loc>'.route('news.show', $published).'</loc>', false)
+            ->assertDontSee(route('news.show', $draft), false);
+    }
+
+    public function test_robots_file_blocks_admin_and_points_to_sitemap(): void
+    {
+        $this->get('/robots.txt')
+            ->assertOk()
+            ->assertSee('Disallow: /admin')
+            ->assertSee('Sitemap: '.route('sitemap'));
+    }
+
     public function test_news_cards_show_category_date_and_reading_time(): void
     {
         Post::factory()->create([

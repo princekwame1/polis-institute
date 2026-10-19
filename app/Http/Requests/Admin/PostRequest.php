@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\Post;
+use App\Support\RichText;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -12,6 +13,14 @@ class PostRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'excerpt' => RichText::sanitize($this->input('excerpt')),
+            'body' => RichText::sanitize($this->input('body')),
+        ]);
     }
 
     /**

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SeoController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(PageController::class)->group(function () {
@@ -21,6 +22,9 @@ Route::controller(PageController::class)->group(function () {
         ->whereIn('policy', ['privacy-policy', 'terms-and-conditions', 'registration-and-refund-policy'])
         ->name('policy');
 });
+
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
+Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
 
 Route::post('/enquiries', [EnquiryController::class, 'store'])
     ->middleware('throttle:10,1')

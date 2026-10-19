@@ -13,7 +13,7 @@
                         <span class="mt-0.5 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-muted">#{{ $faq->sort_order }}</span>
                         <div class="min-w-0 flex-1">
                             <p class="font-bold">{{ $faq->question }}</p>
-                            <p class="mt-1 line-clamp-2 text-sm text-muted">{{ $faq->answer }}</p>
+                            <p class="mt-1 line-clamp-2 text-sm text-muted">{{ \App\Support\RichText::plain($faq->answer) }}</p>
                         </div>
                         <div class="flex items-center gap-1">
                             <x-admin.edit-link :href="route('admin.faqs.edit', $faq)" />

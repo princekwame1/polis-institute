@@ -8,7 +8,7 @@
 
         <x-admin.panel class="grid gap-6">
             <x-admin.input name="title" label="Headline" :value="$slide->title" required maxlength="255" />
-            <x-admin.textarea name="text" label="Text" :value="$slide->text" rows="3" help="One or two short sentences shown under the headline." />
+            <x-admin.textarea name="text" label="Text" :value="$slide->text" rows="3" toolbar="minimal" help="One or two short sentences shown under the headline." />
             <x-admin.image name="image" label="Background photo" :url="$slide->image_url" help="Use a wide landscape photo, ideally 1920 × 1080 pixels. Up to 5 MB." />
             <x-admin.input name="image_alt" label="Photo description" :value="$slide->image_alt" help="Describe the photo for people using screen readers." />
 

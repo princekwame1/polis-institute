@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initAdminSidebar();
     initImagePreviews();
     initPasswordToggles();
+    initRichTextEditors();
+    initShareButtons();
 });
 
 function initMobileNav() {
@@ -193,6 +195,44 @@ function initPasswordToggles() {
             button.setAttribute('aria-pressed', String(isHidden));
             button.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
             button.classList.toggle('text-brand-700', isHidden);
+        });
+    });
+}
+
+function initRichTextEditors() {
+    const textareas = document.querySelectorAll('textarea[data-rich-text]');
+
+    if (textareas.length === 0) {
+        return;
+    }
+
+    import('./rich-text.js').then(({ default: mountRichTextEditor }) => textareas.forEach(mountRichTextEditor));
+}
+
+function initShareButtons() {
+    document.querySelectorAll('[data-copy-link]').forEach((button) => {
+        const status = button.parentElement.querySelector('[data-copy-link-status]');
+
+        button.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(button.dataset.copyLink);
+                status.textContent = 'Link copied';
+            } catch {
+                status.textContent = 'Could not copy the link';
+            }
+
+            setTimeout(() => (status.textContent = ''), 2500);
+        });
+    });
+
+    if (!navigator.share) {
+        return;
+    }
+
+    document.querySelectorAll('[data-native-share]').forEach((button) => {
+        button.classList.replace('hidden', 'grid');
+        button.addEventListener('click', () => {
+            navigator.share({ title: button.dataset.shareTitle, url: button.dataset.shareUrl }).catch(() => {});
         });
     });
 }

@@ -31,7 +31,7 @@
         </h2>
 
         @if ($post->excerpt)
-            <p @class(['mt-3 leading-relaxed text-muted', 'line-clamp-4 text-lg' => $featured, 'line-clamp-3 text-sm' => ! $featured])>{{ $post->excerpt }}</p>
+            <p @class(['mt-3 leading-relaxed text-muted', 'line-clamp-4 text-lg' => $featured, 'line-clamp-3 text-sm' => ! $featured])>{{ \App\Support\RichText::plain($post->excerpt) }}</p>
         @endif
 
         <p @class(['flex items-center justify-between gap-4 pt-5 text-sm font-semibold text-muted', 'mt-auto' => ! $featured, 'mt-6' => $featured])>

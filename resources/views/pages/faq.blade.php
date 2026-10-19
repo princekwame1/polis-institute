@@ -1,4 +1,4 @@
-<x-layouts.app title="Frequently Asked Questions">
+<x-layouts.app title="Frequently Asked Questions" description="Answers to common questions about PROLIS Institute courses, registration and training.">
     <x-page-header eyebrow="FAQs" title="Frequently Asked Questions">
         Answers to common questions about PROLIS Institute, our courses and registration.
     </x-page-header>
@@ -13,7 +13,7 @@
                             <x-icon name="chevron" class="faq-chevron size-4 transition" />
                         </span>
                     </summary>
-                    <p class="px-6 pb-6 leading-relaxed text-muted">{!! nl2br(e($faq->answer)) !!}</p>
+                    <div class="rich-text px-6 pb-6 leading-relaxed text-muted">{{ \App\Support\RichText::render($faq->answer) }}</div>
                 </details>
             @endforeach
         </div>

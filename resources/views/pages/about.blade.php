@@ -1,4 +1,4 @@
-<x-layouts.app title="About Us">
+<x-layouts.app title="About Us" description="Learn about PROLIS Institute, the Professional Learning and Industry Skills Institute in Accra and Sunyani, Ghana: our mission, vision and approach to practical, career-focused training.">
     @php($site = config('prolis'))
 
     <x-page-header eyebrow="About Us" title="About PROLIS Institute">

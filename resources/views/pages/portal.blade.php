@@ -1,4 +1,4 @@
-<x-layouts.app title="Student Portal">
+<x-layouts.app title="Student Portal" description="The PROLIS Institute Student Portal, where registered learners will find everything they need for their course.">
     <x-page-header eyebrow="Student Portal" title="Your Learning, Organised in One Place">
         One place for registered learners to find course information and student services.
     </x-page-header>

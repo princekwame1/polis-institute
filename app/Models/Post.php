@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\RichText;
 use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -57,7 +58,7 @@ class Post extends Model
      */
     public function readingTime(): int
     {
-        return max(1, (int) ceil(str_word_count(strip_tags($this->body)) / 200));
+        return max(1, (int) ceil(str_word_count(RichText::plain($this->body)) / 200));
     }
 
     /**

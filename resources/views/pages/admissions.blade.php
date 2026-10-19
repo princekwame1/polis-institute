@@ -1,4 +1,4 @@
-<x-layouts.app title="Admissions and Registration">
+<x-layouts.app title="Admissions and Registration" description="Register for a PROLIS Institute course. See how admission works and send your details so our team can help you get started.">
     @php($site = config('prolis'))
 
     <x-page-header eyebrow="Admissions and Registration" title="Start Your Learning Journey">

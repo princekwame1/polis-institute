@@ -216,3 +216,79 @@ details > summary::-webkit-details-marker {
 details[open] .faq-chevron {
     @apply rotate-180;
 }
+
+/* Content written in the admin's rich text editor */
+.rich-text > * + * {
+    margin-top: 1em;
+}
+
+.rich-text a {
+    @apply font-semibold text-brand-600 underline underline-offset-2 hover:text-brand-800;
+}
+
+.rich-text strong {
+    @apply font-bold;
+}
+
+.rich-text h2 {
+    @apply text-2xl font-extrabold text-ink;
+}
+
+.rich-text h3 {
+    @apply text-xl font-extrabold text-ink;
+}
+
+.rich-text ul {
+    @apply list-disc pl-6;
+}
+
+.rich-text ol {
+    @apply list-decimal pl-6;
+}
+
+.rich-text li + li {
+    @apply mt-1;
+}
+
+.rich-text blockquote {
+    @apply border-l-4 border-brand-200 pl-4 italic;
+}
+
+/* Quill editor, matched to .form-input */
+.rich-text-editor .ql-toolbar.ql-snow {
+    @apply rounded-t-xl border-gray-300 bg-gray-50 font-sans;
+}
+
+.rich-text-editor .ql-container.ql-snow {
+    @apply rounded-b-xl border-gray-300 bg-white font-sans text-base text-ink;
+}
+
+.rich-text-editor .ql-container.ql-snow:only-child {
+    @apply rounded-t-xl border-t;
+}
+
+.rich-text-editor:focus-within .ql-toolbar.ql-snow,
+.rich-text-editor:focus-within .ql-container.ql-snow {
+    @apply border-brand-500;
+}
+
+.rich-text-editor:focus-within {
+    @apply rounded-xl ring-4 ring-brand-100;
+}
+
+.rich-text-editor.is-invalid .ql-toolbar.ql-snow,
+.rich-text-editor.is-invalid .ql-container.ql-snow {
+    @apply border-red-400;
+}
+
+.rich-text-editor .ql-editor {
+    @apply min-h-[inherit] px-4 py-3 leading-relaxed;
+}
+
+.rich-text-editor .ql-snow .ql-editor h2 {
+    @apply text-2xl font-extrabold;
+}
+
+.rich-text-editor .ql-snow .ql-editor h3 {
+    @apply text-xl font-extrabold;
+}

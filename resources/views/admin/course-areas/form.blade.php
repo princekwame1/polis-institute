@@ -8,8 +8,8 @@
 
         <x-admin.panel class="grid gap-6">
             <x-admin.input name="title" label="Programme area" :value="$courseArea->title" required placeholder="Digital Marketing and Social Media" />
-            <x-admin.textarea name="summary" label="Short summary" :value="$courseArea->summary" rows="2" help="Shown on the home page course cards." />
-            <x-admin.textarea name="items" label="Courses" :value="implode(PHP_EOL, $courseArea->items ?? [])" rows="8" required help="Put each course on its own line." />
+            <x-admin.textarea name="summary" label="Short summary" :value="$courseArea->summary" rows="2" toolbar="minimal" help="Shown on the home page course cards." />
+            <x-admin.textarea name="items" label="Courses" :value="implode(PHP_EOL, $courseArea->items ?? [])" rows="8" required toolbar="none" help="Put each course on its own line." />
 
             <fieldset>
                 <legend class="form-label">Icon</legend>

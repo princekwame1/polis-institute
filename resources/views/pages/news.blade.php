@@ -1,4 +1,4 @@
-<x-layouts.app title="News and Publications">
+<x-layouts.app title="News and Publications" description="News, announcements, events and career insights from PROLIS Institute.">
     <x-page-header eyebrow="News and Publications" title="Insights, Updates, and Professional Development">
         News from the Institute, plus ideas and advice to help you grow in your career.
     </x-page-header>

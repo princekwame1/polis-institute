@@ -1,4 +1,4 @@
-<x-layouts.app title="Contact Us">
+<x-layouts.app title="Contact Us" description="Contact PROLIS Institute by phone, email or WhatsApp, or send us a message about courses, registration or corporate training.">
 
     <x-page-header eyebrow="Contact Us" title="Connect With PROLIS Institute">
         Thinking about a course, looking for staff training or just have a question? We would love to hear from you.

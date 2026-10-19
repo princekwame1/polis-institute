@@ -1,4 +1,4 @@
-<x-layouts.app title="Corporate Training">
+<x-layouts.app title="Corporate Training" description="Tailored corporate training from PROLIS Institute to build the communication, marketing, leadership and management skills of your team.">
     @php($site = config('prolis'))
 
     <x-page-header eyebrow="Corporate Training" title="Professional Development for Organisations">

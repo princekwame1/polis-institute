@@ -1,4 +1,4 @@
-<x-layouts.app title="Facilitators and Management">
+<x-layouts.app title="Facilitators and Management" description="Meet the experienced industry practitioners who facilitate courses and lead PROLIS Institute.">
     <x-page-header eyebrow="Facilitators and Management" title="Meet the People Behind PROLIS Institute">
         Meet the team that leads, organises and teaches our programmes.
     </x-page-header>
@@ -22,7 +22,7 @@
                         <h3 class="mt-5 text-lg font-extrabold">{{ $facilitator->name }}</h3>
                         <p class="mt-1 text-sm font-bold uppercase tracking-widest text-brand-500">{{ $facilitator->role }}</p>
                         @if ($facilitator->bio)
-                            <p class="mt-4 text-sm leading-relaxed text-muted">{{ $facilitator->bio }}</p>
+                            <div class="rich-text mt-4 text-sm leading-relaxed text-muted">{{ \App\Support\RichText::render($facilitator->bio) }}</div>
                         @endif
                     </article>
                 @endforeach

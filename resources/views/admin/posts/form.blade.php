@@ -10,7 +10,7 @@
             <x-admin.panel class="grid content-start gap-6 lg:col-span-2">
                 <x-admin.input name="title" label="Title" :value="$post->title" required />
                 <x-admin.textarea name="excerpt" label="Summary" :value="$post->excerpt" rows="2" help="A sentence or two shown on the News page and at the top of the article." />
-                <x-admin.textarea name="body" label="Article" :value="$post->body" rows="16" required help="Leave a blank line between paragraphs." />
+                <x-admin.textarea name="body" label="Article" :value="$post->body" rows="16" required toolbar="full" />
             </x-admin.panel>
 
             <div class="grid content-start gap-8">

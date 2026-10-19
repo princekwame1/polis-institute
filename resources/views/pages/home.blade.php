@@ -1,5 +1,19 @@
 <x-layouts.app>
     @php($site = config('prolis'))
+    <x-slot:head>
+        <x-json-ld :data="[
+            '@type' => 'EducationalOrganization',
+            'name' => $site['name'],
+            'alternateName' => $site['full_name'],
+            'slogan' => $site['tagline'],
+            'url' => route('home'),
+            'logo' => asset('images/logo.png'),
+            'email' => $contact['email'],
+            'telephone' => $contact['phone_link'],
+            'areaServed' => 'Ghana',
+            'sameAs' => array_values(array_filter([$contact['facebook'] ?? null, $contact['instagram'] ?? null, $contact['linkedin'] ?? null, $contact['youtube'] ?? null])),
+        ]" />
+    </x-slot:head>
 
     {{-- Hero slider --}}
     <section data-hero-slider class="relative overflow-hidden bg-brand-950 text-white" aria-roledescription="carousel" aria-label="Highlights">
@@ -19,7 +33,7 @@
                         <h1 class="text-4xl font-extrabold leading-[1.1] sm:text-5xl lg:text-6xl">{{ $slide->title }}</h1>
                         <div>
                             @if ($slide->text)
-                                <p class="mt-6 max-w-2xl text-lg leading-relaxed text-brand-100">{{ $slide->text }}</p>
+                                <div class="rich-text mt-6 max-w-2xl text-lg leading-relaxed text-brand-100">{{ \App\Support\RichText::render($slide->text) }}</div>
                             @endif
                             <div class="mt-9 flex flex-wrap gap-3">
                                 @if ($slide->primary_button_text && $slide->primary_button_url)
@@ -108,7 +122,7 @@
                     <a href="{{ route('courses') }}#{{ $area->slug }}" class="card reveal group flex flex-col">
                         <span class="icon-tile transition group-hover:bg-brand-600 group-hover:text-white"><x-icon :name="$area->icon" /></span>
                         <h3 class="mt-5 text-lg font-extrabold leading-snug">{{ $area->title }}</h3>
-                        <p class="mt-3 flex-1 text-sm leading-relaxed text-muted">{{ $area->summary }}</p>
+                        <div class="rich-text mt-3 flex-1 text-sm leading-relaxed text-muted">{{ \App\Support\RichText::render($area->summary) }}</div>
                         <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-brand-600">View courses <x-icon name="arrow" class="size-4 transition group-hover:translate-x-1" /></span>
                     </a>
                 @endforeach

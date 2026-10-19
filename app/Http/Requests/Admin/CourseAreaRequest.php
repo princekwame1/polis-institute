@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\CourseArea;
+use App\Support\RichText;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -17,7 +18,11 @@ class CourseAreaRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge(['show_on_home' => $this->boolean('show_on_home')]);
+        $this->merge([
+            'show_on_home' => $this->boolean('show_on_home'),
+            'summary' => RichText::sanitize($this->input('summary')),
+            'items' => RichText::toText($this->input('items')),
+        ]);
     }
 
     /**
